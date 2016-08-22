@@ -14,5 +14,8 @@
     <Setting Name="ReverseSensor" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="Amplitude" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">40</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

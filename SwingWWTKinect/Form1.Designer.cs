@@ -35,7 +35,13 @@
             this.topSliceEdit = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.BottomSliceEdit = new System.Windows.Forms.TextBox();
+            this.Preview = new System.Windows.Forms.CheckBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.Amplitude = new System.Windows.Forms.TrackBar();
+            this.label4 = new System.Windows.Forms.Label();
+            this.SelectRope = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Amplitude)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -50,16 +56,16 @@
             // AngleDisplay
             // 
             this.AngleDisplay.AutoSize = true;
-            this.AngleDisplay.Location = new System.Drawing.Point(1122, 43);
+            this.AngleDisplay.Location = new System.Drawing.Point(1078, 12);
             this.AngleDisplay.Name = "AngleDisplay";
-            this.AngleDisplay.Size = new System.Drawing.Size(70, 25);
+            this.AngleDisplay.Size = new System.Drawing.Size(103, 25);
             this.AngleDisplay.TabIndex = 2;
-            this.AngleDisplay.Text = "label1";
+            this.AngleDisplay.Text = "Angle: 90";
             // 
             // reverse
             // 
             this.reverse.AutoSize = true;
-            this.reverse.Location = new System.Drawing.Point(1118, 153);
+            this.reverse.Location = new System.Drawing.Point(1083, 56);
             this.reverse.Name = "reverse";
             this.reverse.Size = new System.Drawing.Size(124, 29);
             this.reverse.TabIndex = 3;
@@ -70,7 +76,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(1078, 237);
+            this.label1.Location = new System.Drawing.Point(1078, 103);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(49, 25);
             this.label1.TabIndex = 4;
@@ -78,7 +84,7 @@
             // 
             // topSliceEdit
             // 
-            this.topSliceEdit.Location = new System.Drawing.Point(1083, 278);
+            this.topSliceEdit.Location = new System.Drawing.Point(1083, 144);
             this.topSliceEdit.Name = "topSliceEdit";
             this.topSliceEdit.Size = new System.Drawing.Size(100, 31);
             this.topSliceEdit.TabIndex = 5;
@@ -87,7 +93,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(1078, 328);
+            this.label2.Location = new System.Drawing.Point(1078, 194);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(79, 25);
             this.label2.TabIndex = 4;
@@ -96,17 +102,74 @@
             // 
             // BottomSliceEdit
             // 
-            this.BottomSliceEdit.Location = new System.Drawing.Point(1083, 369);
+            this.BottomSliceEdit.Location = new System.Drawing.Point(1083, 235);
             this.BottomSliceEdit.Name = "BottomSliceEdit";
             this.BottomSliceEdit.Size = new System.Drawing.Size(100, 31);
             this.BottomSliceEdit.TabIndex = 5;
             this.BottomSliceEdit.TextChanged += new System.EventHandler(this.BottomSliceEdit_TextChanged);
+            // 
+            // Preview
+            // 
+            this.Preview.AutoSize = true;
+            this.Preview.Location = new System.Drawing.Point(1083, 293);
+            this.Preview.Name = "Preview";
+            this.Preview.Size = new System.Drawing.Size(120, 29);
+            this.Preview.TabIndex = 6;
+            this.Preview.Text = "Preview";
+            this.Preview.UseVisualStyleBackColor = true;
+            this.Preview.CheckedChanged += new System.EventHandler(this.Preview_CheckedChanged);
+            // 
+            // label3
+            // 
+            this.label3.Location = new System.Drawing.Point(1061, 723);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(438, 97);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "Created as a collaboration between lab212, MuDA, American Asctronomical Society a" +
+    "nd Microsoft";
+            // 
+            // Amplitude
+            // 
+            this.Amplitude.Location = new System.Drawing.Point(1083, 392);
+            this.Amplitude.Maximum = 100;
+            this.Amplitude.Minimum = 1;
+            this.Amplitude.Name = "Amplitude";
+            this.Amplitude.Size = new System.Drawing.Size(381, 90);
+            this.Amplitude.TabIndex = 8;
+            this.Amplitude.TickFrequency = 10;
+            this.Amplitude.Value = 40;
+            this.Amplitude.ValueChanged += new System.EventHandler(this.Aplitude_ValueChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(1083, 346);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(154, 25);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "Swing Aplitude";
+            // 
+            // SelectRope
+            // 
+            this.SelectRope.AutoSize = true;
+            this.SelectRope.Location = new System.Drawing.Point(1088, 462);
+            this.SelectRope.Name = "SelectRope";
+            this.SelectRope.Size = new System.Drawing.Size(251, 29);
+            this.SelectRope.TabIndex = 10;
+            this.SelectRope.Text = "Select Rope Distance";
+            this.SelectRope.UseVisualStyleBackColor = true;
+            this.SelectRope.CheckedChanged += new System.EventHandler(this.SelectRope_CheckedChanged);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(192F, 192F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(1511, 988);
+            this.Controls.Add(this.SelectRope);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.Amplitude);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.Preview);
             this.Controls.Add(this.BottomSliceEdit);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.topSliceEdit);
@@ -115,10 +178,11 @@
             this.Controls.Add(this.AngleDisplay);
             this.Controls.Add(this.pictureBox1);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "WorldWide Telescope Kinect Swing Controller";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Amplitude)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -132,6 +196,11 @@
         private System.Windows.Forms.TextBox topSliceEdit;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox BottomSliceEdit;
+        private System.Windows.Forms.CheckBox Preview;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TrackBar Amplitude;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckBox SelectRope;
     }
 }
 

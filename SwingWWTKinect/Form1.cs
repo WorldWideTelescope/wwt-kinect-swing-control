@@ -92,6 +92,7 @@ namespace SwingWWTKinect
             reverse.Checked = Properties.Settings.Default.ReverseSensor;
             topSliceEdit.Text = Properties.Settings.Default.TopSlice.ToString();
             BottomSliceEdit.Text = Properties.Settings.Default.BottomSlice.ToString();
+            Amplitude.Value = (int)Properties.Settings.Default.Amplitude;
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -164,7 +165,10 @@ namespace SwingWWTKinect
             ushort* frameData = (ushort*)depthFrameData;
 
             FillBitmap(frameData, minDepth, maxDepth, depthBitmap);
-            Refresh();
+            if (Preview.Checked)
+            {
+                Refresh();
+            }
             //// convert depth to a visual representation
             //for (int i = 0; i < (int)(depthFrameDataSize / this.depthFrameDescription.BytesPerPixel); ++i)
             //{
@@ -202,7 +206,11 @@ namespace SwingWWTKinect
 
             int topSlice = Properties.Settings.Default.TopSlice;
             int bottomSlice = Properties.Settings.Default.BottomSlice;
-          
+
+            List<int> topPoints = new List<int>();
+            List<int> bottomPoints = new List<int>();
+
+
             FastBitmap fastBmp = new FastBitmap(bmp);
 
             fastBmp.LockBitmap();
@@ -245,14 +253,16 @@ namespace SwingWWTKinect
                         {
                             *pData++ = new PixelData(255, 0, 0, 255);
 
-                            if (y > bottomSlice - 5 && y < bottomSlice + 5)
+                            if (y > bottomSlice - 9 && y < bottomSlice + 9)
                             {
+                                bottomPoints.Add(x);
                                 bottomPixelCount++;
                                 bottomPixelTotal += x;
                             }
 
-                            if (y > topSlice - 5 && y < topSlice + 5)
+                            if (y > topSlice - 9 && y < topSlice + 9)
                             {
+                                topPoints.Add(x);
                                 topPixelCount++;
                                 topPixelTotal += x;
                             }
@@ -276,22 +286,65 @@ namespace SwingWWTKinect
                 }
             }
 
+            double topT = (double)topPixelTotal / (double)topPixelCount;
+            double bottomT = (double)bottomPixelTotal / (double)bottomPixelCount;
+
+          
+
+            // Now do it again and reject outliers
+            // loop 3 times with a narrower windows until we converge on inlyers
+
+            for (int dist = 128; dist > 8; dist /= 2)
+            {
+                topPixelCount = 0;
+                bottomPixelCount = 0;
+                topPixelTotal = 0;
+                bottomPixelTotal = 0;
+
+                foreach (int x in topPoints)
+                {
+                    if (Math.Abs(x - topT) < dist)
+                    {
+                        topPixelTotal += x;
+                        topPixelCount++;
+                    }
+                }
+
+                foreach (int x in bottomPoints)
+                {
+                    if (Math.Abs(x - bottomT) < dist)
+                    {
+                        bottomPixelTotal += x;
+                        bottomPixelCount++;
+                    }
+                }
+                double topF = (double)topPixelTotal / (double)topPixelCount;
+                double bottomF = (double)bottomPixelTotal / (double)bottomPixelCount;
+            }
+
             double top = (double)topPixelTotal / (double)topPixelCount;
             double bottom = (double)bottomPixelTotal / (double)bottomPixelCount;
+
 
             double xp = bottom - top;
             double yp = Properties.Settings.Default.BottomSlice - Properties.Settings.Default.TopSlice;
 
             double angle = Math.Atan2(yp, xp) / Math.PI * 180;
 
-            lastAngle = (lastAngle * 2 + angle) / 3;
+            if (!double.IsNaN(angle))
+            {
+                lastAngle = (lastAngle * 2 + angle) / 3;
 
-            NetControl.SendCommand(((angle - 90) * (Properties.Settings.Default.ReverseSensor ? -5 : 5)).ToString() + ", DistanceOffset");
+                float amp = (Properties.Settings.Default.Amplitude) / 20;
+
+                NetControl.SendCommand((( lastAngle - 90) * (Properties.Settings.Default.ReverseSensor ? -amp : amp)).ToString() + ", DistanceOffset");
+            }
+
             AngleDisplay.Invoke((MethodInvoker)delegate { this.AngleDisplay.Text = "Angle: " + angle.ToString(); }); 
             fastBmp.UnlockBitmap();
         }
 
-        double lastAngle = 0; 
+        double lastAngle = 90; 
         /// <summary>
         /// Handles the event which the sensor becomes unavailable (E.g. paused, closed, unplugged).
         /// </summary>
@@ -305,8 +358,13 @@ namespace SwingWWTKinect
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
-            pickRope = true;
-            RopePixel = new Point(e.X, e.Y);
+            if (selectingRope)
+            {
+                pickRope = true;
+                SelectRope.Checked = false;
+
+                RopePixel = new Point(e.X, e.Y);
+            }
         }
 
         private void reverse_CheckedChanged(object sender, EventArgs e)
@@ -336,6 +394,29 @@ namespace SwingWWTKinect
             if (int.TryParse(this.topSliceEdit.Text, out top))
             {
                 Properties.Settings.Default.TopSlice = top;
+            }
+        }
+
+        private void Preview_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Aplitude_ValueChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.Amplitude = Amplitude.Value;
+        }
+
+        bool selectingRope = false;
+        private void SelectRope_CheckedChanged(object sender, EventArgs e)
+        {
+            if (SelectRope.Checked)
+            {
+                selectingRope = true;
+            }
+            else
+            {
+                selectingRope = false;
             }
         }
     }

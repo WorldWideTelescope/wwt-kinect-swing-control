@@ -70,5 +70,17 @@ namespace SwingWWTKinect.Properties {
                 this["ReverseSensor"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("40")]
+        public float Amplitude {
+            get {
+                return ((float)(this["Amplitude"]));
+            }
+            set {
+                this["Amplitude"] = value;
+            }
+        }
     }
 }
