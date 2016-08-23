@@ -82,5 +82,65 @@ namespace SwingWWTKinect.Properties {
                 this["Amplitude"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("user")]
+        public string LoginUsername {
+            get {
+                return ((string)(this["LoginUsername"]));
+            }
+            set {
+                this["LoginUsername"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("password")]
+        public string LoginPassword {
+            get {
+                return ((string)(this["LoginPassword"]));
+            }
+            set {
+                this["LoginPassword"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LightOnUrl {
+            get {
+                return ((string)(this["LightOnUrl"]));
+            }
+            set {
+                this["LightOnUrl"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LightOffUrl {
+            get {
+                return ((string)(this["LightOffUrl"]));
+            }
+            set {
+                this["LightOffUrl"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("15000")]
+        public int AutoLightsTimeout {
+            get {
+                return ((int)(this["AutoLightsTimeout"]));
+            }
+            set {
+                this["AutoLightsTimeout"] = value;
+            }
+        }
     }
 }

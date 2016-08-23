@@ -40,6 +40,9 @@
             this.Amplitude = new System.Windows.Forms.TrackBar();
             this.label4 = new System.Windows.Forms.Label();
             this.SelectRope = new System.Windows.Forms.CheckBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.LightingSettings = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Amplitude)).BeginInit();
             this.SuspendLayout();
@@ -160,11 +163,44 @@
             this.SelectRope.UseVisualStyleBackColor = true;
             this.SelectRope.CheckedChanged += new System.EventHandler(this.SelectRope_CheckedChanged);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(1083, 561);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(154, 41);
+            this.button1.TabIndex = 11;
+            this.button1.Text = "Lights On";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(1260, 561);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(138, 41);
+            this.button2.TabIndex = 12;
+            this.button2.Text = "Lights Off";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // LightingSettings
+            // 
+            this.LightingSettings.Location = new System.Drawing.Point(1083, 634);
+            this.LightingSettings.Name = "LightingSettings";
+            this.LightingSettings.Size = new System.Drawing.Size(315, 41);
+            this.LightingSettings.TabIndex = 13;
+            this.LightingSettings.Text = "Lighting Settings";
+            this.LightingSettings.UseVisualStyleBackColor = true;
+            this.LightingSettings.Click += new System.EventHandler(this.LightingSettings_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(192F, 192F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(1511, 988);
+            this.Controls.Add(this.LightingSettings);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.SelectRope);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.Amplitude);
@@ -201,6 +237,9 @@
         private System.Windows.Forms.TrackBar Amplitude;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.CheckBox SelectRope;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button LightingSettings;
     }
 }
 

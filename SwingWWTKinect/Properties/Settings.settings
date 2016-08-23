@@ -17,5 +17,20 @@
     <Setting Name="Amplitude" Type="System.Single" Scope="User">
       <Value Profile="(Default)">40</Value>
     </Setting>
+    <Setting Name="LoginUsername" Type="System.String" Scope="User">
+      <Value Profile="(Default)">user</Value>
+    </Setting>
+    <Setting Name="LoginPassword" Type="System.String" Scope="User">
+      <Value Profile="(Default)">password</Value>
+    </Setting>
+    <Setting Name="LightOnUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="LightOffUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="AutoLightsTimeout" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">15000</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -10,6 +10,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -93,8 +94,15 @@ namespace SwingWWTKinect
             topSliceEdit.Text = Properties.Settings.Default.TopSlice.ToString();
             BottomSliceEdit.Text = Properties.Settings.Default.BottomSlice.ToString();
             Amplitude.Value = (int)Properties.Settings.Default.Amplitude;
+            rope = Properties.Settings.Default.RopeDepth;
+            IgnoreCerts();
         }
 
+
+        private void IgnoreCerts()
+        {
+            ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
+        }
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (this.depthFrameReader != null)
@@ -338,11 +346,34 @@ namespace SwingWWTKinect
                 float amp = (Properties.Settings.Default.Amplitude) / 20;
 
                 NetControl.SendCommand((( lastAngle - 90) * (Properties.Settings.Default.ReverseSensor ? -amp : amp)).ToString() + ", DistanceOffset");
+
+                if (Math.Abs(lastAngle - 90) > 10)
+                {
+                    lastSwing = DateTime.Now;
+                    if (lightsOn)
+                    {
+                        this.Invoke((MethodInvoker)delegate { LightsOff(); });
+                    }
+                }
+
+                if ((DateTime.Now - lastSwing).TotalMilliseconds > Properties.Settings.Default.AutoLightsTimeout)
+                {
+                    if (!lightsOn)
+                    {
+                        this.Invoke((MethodInvoker)delegate { LightsOn(); });
+                    }
+                }
             }
 
             AngleDisplay.Invoke((MethodInvoker)delegate { this.AngleDisplay.Text = "Angle: " + angle.ToString(); }); 
             fastBmp.UnlockBitmap();
+
+           
+
         }
+
+        bool lightsOn = false;
+        DateTime lastSwing = DateTime.Now;
 
         double lastAngle = 90; 
         /// <summary>
@@ -418,6 +449,65 @@ namespace SwingWWTKinect
             {
                 selectingRope = false;
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            LightsOn();
+
+        }
+
+        private void LightsOn()
+        {
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(Properties.Settings.Default.LightOnUrl))
+                {
+
+                    WebClient client = new WebClient();
+                    client.UseDefaultCredentials = true;
+                    client.Credentials = new NetworkCredential(Properties.Settings.Default.LoginUsername, Properties.Settings.Default.LoginPassword);
+
+                    client.DownloadString(Properties.Settings.Default.LightOnUrl);
+                }
+            }
+            catch
+            {
+
+            }
+            lightsOn = true;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            LightsOff();
+
+        }
+
+        private void LightsOff()
+        {
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(Properties.Settings.Default.LightOffUrl))
+                {
+                    WebClient client = new WebClient();
+                    client.UseDefaultCredentials = true;
+                    client.Credentials = new NetworkCredential(Properties.Settings.Default.LoginUsername, Properties.Settings.Default.LoginPassword);
+
+                    client.DownloadString(Properties.Settings.Default.LightOffUrl);
+                }
+            }
+            catch
+            {
+
+            }
+            lightsOn = false;
+        }
+
+        private void LightingSettings_Click(object sender, EventArgs e)
+        {
+            LightsForm lights = new LightsForm();
+            lights.ShowDialog();
         }
     }
 }
