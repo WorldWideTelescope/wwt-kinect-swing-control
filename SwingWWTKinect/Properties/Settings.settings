@@ -32,5 +32,14 @@
     <Setting Name="AutoLightsTimeout" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">15000</Value>
     </Setting>
+    <Setting Name="UpSideDown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="MiddleSlide" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">75</Value>
+    </Setting>
+    <Setting Name="Preview" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

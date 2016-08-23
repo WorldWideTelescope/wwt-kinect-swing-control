@@ -43,6 +43,9 @@
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.LightingSettings = new System.Windows.Forms.Button();
+            this.UpSideDown = new System.Windows.Forms.CheckBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.MiddleSlideEdit = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Amplitude)).BeginInit();
             this.SuspendLayout();
@@ -59,19 +62,19 @@
             // AngleDisplay
             // 
             this.AngleDisplay.AutoSize = true;
-            this.AngleDisplay.Location = new System.Drawing.Point(1078, 12);
+            this.AngleDisplay.Location = new System.Drawing.Point(1090, 12);
             this.AngleDisplay.Name = "AngleDisplay";
             this.AngleDisplay.Size = new System.Drawing.Size(103, 25);
-            this.AngleDisplay.TabIndex = 2;
+            this.AngleDisplay.TabIndex = 0;
             this.AngleDisplay.Text = "Angle: 90";
             // 
             // reverse
             // 
             this.reverse.AutoSize = true;
-            this.reverse.Location = new System.Drawing.Point(1083, 56);
+            this.reverse.Location = new System.Drawing.Point(1093, 53);
             this.reverse.Name = "reverse";
             this.reverse.Size = new System.Drawing.Size(124, 29);
-            this.reverse.TabIndex = 3;
+            this.reverse.TabIndex = 1;
             this.reverse.Text = "Reverse";
             this.reverse.UseVisualStyleBackColor = true;
             this.reverse.CheckedChanged += new System.EventHandler(this.reverse_CheckedChanged);
@@ -79,66 +82,66 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(1078, 103);
+            this.label1.Location = new System.Drawing.Point(1088, 100);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(49, 25);
-            this.label1.TabIndex = 4;
+            this.label1.TabIndex = 3;
             this.label1.Text = "Top";
             // 
             // topSliceEdit
             // 
-            this.topSliceEdit.Location = new System.Drawing.Point(1083, 144);
+            this.topSliceEdit.Location = new System.Drawing.Point(1093, 141);
             this.topSliceEdit.Name = "topSliceEdit";
             this.topSliceEdit.Size = new System.Drawing.Size(100, 31);
-            this.topSliceEdit.TabIndex = 5;
+            this.topSliceEdit.TabIndex = 4;
             this.topSliceEdit.TextChanged += new System.EventHandler(this.topSliceEdit_TextChanged);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(1078, 194);
+            this.label2.Location = new System.Drawing.Point(1088, 315);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(79, 25);
-            this.label2.TabIndex = 4;
+            this.label2.TabIndex = 5;
             this.label2.Text = "Bottom";
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // BottomSliceEdit
             // 
-            this.BottomSliceEdit.Location = new System.Drawing.Point(1083, 235);
+            this.BottomSliceEdit.Location = new System.Drawing.Point(1093, 356);
             this.BottomSliceEdit.Name = "BottomSliceEdit";
             this.BottomSliceEdit.Size = new System.Drawing.Size(100, 31);
-            this.BottomSliceEdit.TabIndex = 5;
+            this.BottomSliceEdit.TabIndex = 6;
             this.BottomSliceEdit.TextChanged += new System.EventHandler(this.BottomSliceEdit_TextChanged);
             // 
             // Preview
             // 
             this.Preview.AutoSize = true;
-            this.Preview.Location = new System.Drawing.Point(1083, 293);
+            this.Preview.Location = new System.Drawing.Point(1093, 414);
             this.Preview.Name = "Preview";
             this.Preview.Size = new System.Drawing.Size(120, 29);
-            this.Preview.TabIndex = 6;
+            this.Preview.TabIndex = 7;
             this.Preview.Text = "Preview";
             this.Preview.UseVisualStyleBackColor = true;
             this.Preview.CheckedChanged += new System.EventHandler(this.Preview_CheckedChanged);
             // 
             // label3
             // 
-            this.label3.Location = new System.Drawing.Point(1061, 723);
+            this.label3.Location = new System.Drawing.Point(1071, 844);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(438, 97);
-            this.label3.TabIndex = 7;
+            this.label3.TabIndex = 14;
             this.label3.Text = "Created as a collaboration between lab212, MuDA, American Asctronomical Society a" +
     "nd Microsoft";
             // 
             // Amplitude
             // 
-            this.Amplitude.Location = new System.Drawing.Point(1083, 392);
+            this.Amplitude.Location = new System.Drawing.Point(1093, 513);
             this.Amplitude.Maximum = 100;
             this.Amplitude.Minimum = 1;
             this.Amplitude.Name = "Amplitude";
             this.Amplitude.Size = new System.Drawing.Size(381, 90);
-            this.Amplitude.TabIndex = 8;
+            this.Amplitude.TabIndex = 9;
             this.Amplitude.TickFrequency = 10;
             this.Amplitude.Value = 40;
             this.Amplitude.ValueChanged += new System.EventHandler(this.Aplitude_ValueChanged);
@@ -146,16 +149,16 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(1083, 346);
+            this.label4.Location = new System.Drawing.Point(1093, 467);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(154, 25);
-            this.label4.TabIndex = 9;
+            this.label4.TabIndex = 8;
             this.label4.Text = "Swing Aplitude";
             // 
             // SelectRope
             // 
             this.SelectRope.AutoSize = true;
-            this.SelectRope.Location = new System.Drawing.Point(1088, 462);
+            this.SelectRope.Location = new System.Drawing.Point(1098, 583);
             this.SelectRope.Name = "SelectRope";
             this.SelectRope.Size = new System.Drawing.Size(251, 29);
             this.SelectRope.TabIndex = 10;
@@ -165,7 +168,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(1083, 561);
+            this.button1.Location = new System.Drawing.Point(1093, 682);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(154, 41);
             this.button1.TabIndex = 11;
@@ -175,7 +178,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(1260, 561);
+            this.button2.Location = new System.Drawing.Point(1270, 682);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(138, 41);
             this.button2.TabIndex = 12;
@@ -185,7 +188,7 @@
             // 
             // LightingSettings
             // 
-            this.LightingSettings.Location = new System.Drawing.Point(1083, 634);
+            this.LightingSettings.Location = new System.Drawing.Point(1093, 755);
             this.LightingSettings.Name = "LightingSettings";
             this.LightingSettings.Size = new System.Drawing.Size(315, 41);
             this.LightingSettings.TabIndex = 13;
@@ -193,11 +196,40 @@
             this.LightingSettings.UseVisualStyleBackColor = true;
             this.LightingSettings.Click += new System.EventHandler(this.LightingSettings_Click);
             // 
+            // UpSideDown
+            // 
+            this.UpSideDown.AutoSize = true;
+            this.UpSideDown.Location = new System.Drawing.Point(1310, 56);
+            this.UpSideDown.Name = "UpSideDown";
+            this.UpSideDown.Size = new System.Drawing.Size(180, 29);
+            this.UpSideDown.TabIndex = 2;
+            this.UpSideDown.Text = "Up Side Down";
+            this.UpSideDown.UseVisualStyleBackColor = true;
+            this.UpSideDown.CheckedChanged += new System.EventHandler(this.UpSideDown_CheckedChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(1088, 201);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(76, 25);
+            this.label5.TabIndex = 3;
+            this.label5.Text = "Middle";
+            // 
+            // MiddleSlideEdit
+            // 
+            this.MiddleSlideEdit.Location = new System.Drawing.Point(1093, 242);
+            this.MiddleSlideEdit.Name = "MiddleSlideEdit";
+            this.MiddleSlideEdit.Size = new System.Drawing.Size(100, 31);
+            this.MiddleSlideEdit.TabIndex = 4;
+            this.MiddleSlideEdit.TextChanged += new System.EventHandler(this.MiddleSlideEdit_TextChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(192F, 192F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(1511, 988);
+            this.Controls.Add(this.UpSideDown);
             this.Controls.Add(this.LightingSettings);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -208,6 +240,8 @@
             this.Controls.Add(this.Preview);
             this.Controls.Add(this.BottomSliceEdit);
             this.Controls.Add(this.label2);
+            this.Controls.Add(this.MiddleSlideEdit);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this.topSliceEdit);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.reverse);
@@ -240,6 +274,9 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button LightingSettings;
+        private System.Windows.Forms.CheckBox UpSideDown;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox MiddleSlideEdit;
     }
 }
 

@@ -142,5 +142,41 @@ namespace SwingWWTKinect.Properties {
                 this["AutoLightsTimeout"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool UpSideDown {
+            get {
+                return ((bool)(this["UpSideDown"]));
+            }
+            set {
+                this["UpSideDown"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("75")]
+        public int MiddleSlide {
+            get {
+                return ((int)(this["MiddleSlide"]));
+            }
+            set {
+                this["MiddleSlide"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool Preview {
+            get {
+                return ((bool)(this["Preview"]));
+            }
+            set {
+                this["Preview"] = value;
+            }
+        }
     }
 }

@@ -92,12 +92,15 @@ namespace SwingWWTKinect
             pictureBox1.Image = depthBitmap;
             reverse.Checked = Properties.Settings.Default.ReverseSensor;
             topSliceEdit.Text = Properties.Settings.Default.TopSlice.ToString();
+            MiddleSlideEdit.Text = Properties.Settings.Default.MiddleSlide.ToString();
             BottomSliceEdit.Text = Properties.Settings.Default.BottomSlice.ToString();
-            Amplitude.Value = (int)Properties.Settings.Default.Amplitude;
+           Amplitude.Value = (int)Properties.Settings.Default.Amplitude;
             rope = Properties.Settings.Default.RopeDepth;
+
+
+            UpSideDown.Checked = Properties.Settings.Default.UpSideDown;
             IgnoreCerts();
         }
-
 
         private void IgnoreCerts()
         {
@@ -172,21 +175,16 @@ namespace SwingWWTKinect
             // depth frame data is a 16 bit value
             ushort* frameData = (ushort*)depthFrameData;
 
-            FillBitmap(frameData, minDepth, maxDepth, depthBitmap);
-            if (Preview.Checked)
-            {
-                Refresh();
-            }
-            //// convert depth to a visual representation
-            //for (int i = 0; i < (int)(depthFrameDataSize / this.depthFrameDescription.BytesPerPixel); ++i)
-            //{
-            //    // Get the depth for this pixel
-            //    ushort depth = frameData[i];
+            FillBitmap(frameData, minDepth, maxDepth, depthBitmap);   
 
-            //    // To convert to a byte, we're mapping the depth value to the byte range.
-            //    // Values outside the reliable depth range are mapped to 0 (black).
-            //    this.depthPixels[i] = (byte)(depth >= minDepth && depth <= maxDepth ? (depth / MapDepthToByte) : 0);
-            //}
+            if (Properties.Settings.Default.Preview)
+            {
+                if (Properties.Settings.Default.UpSideDown)
+                {
+                    depthBitmap.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                }
+                Refresh();
+            }  
         }
 
         /// <summary>
@@ -208,14 +206,19 @@ namespace SwingWWTKinect
             int stride = width;
 
             int topPixelCount = 0;
+            int middlePixelCount = 0;
             int bottomPixelCount = 0;
+
             int topPixelTotal = 0;
+            int middlePixelTotal = 0;
             int bottomPixelTotal = 0;
 
             int topSlice = Properties.Settings.Default.TopSlice;
+            int middleSlice = Properties.Settings.Default.MiddleSlide;
             int bottomSlice = Properties.Settings.Default.BottomSlice;
 
             List<int> topPoints = new List<int>();
+            List<int> middlePoints = new List<int>();
             List<int> bottomPoints = new List<int>();
 
 
@@ -252,9 +255,6 @@ namespace SwingWWTKinect
                             dataValue = 4000;
                         }
 
-
-
-
                         byte val = (byte)(255 - Math.Min(255, Math.Max(0, (int)((double)(dataValue - min) / factor * 255))));
 
                         if (dataValue > (rope - 300) && dataValue < (rope + 300))
@@ -266,6 +266,13 @@ namespace SwingWWTKinect
                                 bottomPoints.Add(x);
                                 bottomPixelCount++;
                                 bottomPixelTotal += x;
+                            }
+
+                            if (y > middleSlice - 9 && y < middleSlice + 9)
+                            {
+                                middlePoints.Add(x);
+                                middlePixelCount++;
+                                middlePixelTotal += x;
                             }
 
                             if (y > topSlice - 9 && y < topSlice + 9)
@@ -285,6 +292,10 @@ namespace SwingWWTKinect
                             {
                                 *pData++ = new PixelData(0, 0, 255, 255);
                             }
+                            else if (y == middleSlice)
+                            {
+                                *pData++ = new PixelData(255, 255, 0, 255);
+                            }
                             else
                             {
                                 *pData++ = new PixelData(val, val, val, 255);
@@ -295,6 +306,7 @@ namespace SwingWWTKinect
             }
 
             double topT = (double)topPixelTotal / (double)topPixelCount;
+            double middleT = (double)middlePixelTotal / (double)middlePixelCount;
             double bottomT = (double)bottomPixelTotal / (double)bottomPixelCount;
 
           
@@ -305,8 +317,11 @@ namespace SwingWWTKinect
             for (int dist = 128; dist > 8; dist /= 2)
             {
                 topPixelCount = 0;
+                middlePixelCount = 0;
                 bottomPixelCount = 0;
+
                 topPixelTotal = 0;
+                middlePixelTotal = 0;
                 bottomPixelTotal = 0;
 
                 foreach (int x in topPoints)
@@ -315,6 +330,15 @@ namespace SwingWWTKinect
                     {
                         topPixelTotal += x;
                         topPixelCount++;
+                    }
+                }
+
+                foreach (int x in middlePoints)
+                {
+                    if (Math.Abs(x - middleT) < dist)
+                    {
+                        middlePixelTotal += x;
+                        middlePixelCount++;
                     }
                 }
 
@@ -327,21 +351,71 @@ namespace SwingWWTKinect
                     }
                 }
                 double topF = (double)topPixelTotal / (double)topPixelCount;
+                double middleF = (double)middlePixelTotal / (double)middlePixelCount;
                 double bottomF = (double)bottomPixelTotal / (double)bottomPixelCount;
-            }
+          }
 
             double top = (double)topPixelTotal / (double)topPixelCount;
+            double middle = (double)middlePixelTotal / (double)middlePixelCount;
             double bottom = (double)bottomPixelTotal / (double)bottomPixelCount;
 
+            if (topPixelCount < 5)
+            {
+                top = double.NaN;
+            }
+
+            if(middlePixelCount < 5)
+            {
+                middle = double.NaN;
+            }
+
+            if (bottomPixelCount < 5)
+            {
+                bottom = double.NaN;
+            }
 
             double xp = bottom - top;
+            double xp2 = middle - top;
+            if (Properties.Settings.Default.UpSideDown)
+            {
+                xp2 = bottom - middle;
+            }
+
             double yp = Properties.Settings.Default.BottomSlice - Properties.Settings.Default.TopSlice;
+            double yp2 = Properties.Settings.Default.MiddleSlide - Properties.Settings.Default.TopSlice;
+            if (Properties.Settings.Default.UpSideDown)
+            {
+                yp2 = Properties.Settings.Default.BottomSlice - Properties.Settings.Default.MiddleSlide;
+            }
+
 
             double angle = Math.Atan2(yp, xp) / Math.PI * 180;
+            double angle2 = Math.Atan2(yp2, xp2) / Math.PI * 180;
 
-            if (!double.IsNaN(angle))
+            if (!double.IsNaN(angle) || ! double.IsNaN(angle2))
             {
-                lastAngle = (lastAngle * 2 + angle) / 3;
+                if (!double.IsNaN(angle) && !double.IsNaN(angle2))
+                {
+                    if (Math.Abs(angle - angle2) > 1.5)
+                    {
+                        lastAngle = (lastAngle * 2 + angle2) / 3;
+                    }
+                    else
+                    {
+                        lastAngle = (lastAngle * 2 + ((angle + angle2) / 2)) / 3;
+                    }
+                }
+
+                if (!double.IsNaN(angle) )
+                {
+                    lastAngle = (lastAngle * 2 + angle) / 3;
+                }
+
+                if ( !double.IsNaN(angle2))
+                {
+                    lastAngle = (lastAngle * 2 + angle2) / 3;
+                }
+
 
                 float amp = (Properties.Settings.Default.Amplitude) / 20;
 
@@ -365,7 +439,7 @@ namespace SwingWWTKinect
                 }
             }
 
-            AngleDisplay.Invoke((MethodInvoker)delegate { this.AngleDisplay.Text = "Angle: " + angle.ToString(); }); 
+            AngleDisplay.Invoke((MethodInvoker)delegate { this.AngleDisplay.Text = "Angle: " + angle.ToString("000.00"); }); 
             fastBmp.UnlockBitmap();
 
            
@@ -418,6 +492,16 @@ namespace SwingWWTKinect
             }
         }
 
+        private void MiddleSlideEdit_TextChanged(object sender, EventArgs e)
+        {
+            int middle = 0;
+
+            if (int.TryParse(MiddleSlideEdit.Text, out middle))
+            {
+                Properties.Settings.Default.MiddleSlide = middle;
+            }
+        }
+
         private void topSliceEdit_TextChanged(object sender, EventArgs e)
         {
             int top = 0;
@@ -430,7 +514,7 @@ namespace SwingWWTKinect
 
         private void Preview_CheckedChanged(object sender, EventArgs e)
         {
-
+            Properties.Settings.Default.Preview = Preview.Checked;
         }
 
         private void Aplitude_ValueChanged(object sender, EventArgs e)
@@ -509,5 +593,12 @@ namespace SwingWWTKinect
             LightsForm lights = new LightsForm();
             lights.ShowDialog();
         }
+
+        private void UpSideDown_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.UpSideDown = UpSideDown.Checked;
+        }
+
+     
     }
 }
